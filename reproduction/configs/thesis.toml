@@ -1,0 +1,112 @@
+schema_version = 1
+experiment_name = "thesis"
+verification_profile = "thesis_numerical"
+
+[economy]
+alpha = 0.36
+beta = 0.8
+delta = 0.025
+risk_aversion = 1.0
+productivity_bad = 0.99
+productivity_good = 1.01
+unemployment_bad = 0.10
+unemployment_good = 0.04
+unemployment_income = 0.0
+initial_individual_capital = 40.0
+initial_aggregate_capital = 40.0
+invalid_reward = -20.0
+minimum_positive = 0.0001
+
+[transitions]
+average_duration_bad = 8.0
+average_duration_good = 8.0
+unemployment_duration_bad = 2.5
+unemployment_duration_good = 1.5
+unemployment_persistence_gb_over_bb = 1.25
+unemployment_persistence_bg_over_gg = 0.75
+simulation_initial_aggregate_state = 1
+
+[grids]
+individual_min = 0.1
+individual_max = 1000.0
+individual_size = 100
+individual_curvature = 7.0
+aggregate_min = 0.1
+aggregate_max = 50.0
+aggregate_size = 20
+
+[network]
+state_size = 4
+action_size = 1
+hidden_sizes = [200, 100]
+actor_learning_rate = 0.00001
+critic_learning_rate = 0.00005
+target_update_rate = 0.01
+batch_size = 1024
+replay_capacity = 1000000
+replay_sample_with_replacement = true
+action_bound = 1.0
+actor_output_scale = 2.0
+normalization = "legacy_frozen"
+initialization = "legacy_glorot_normal"
+ou_mean = 0.0
+ou_sigma = 0.05
+ou_theta = 0.20
+ou_dt = 0.01
+
+[exploration]
+kind = "ou"
+uniform_low = 0.0
+uniform_high = 1.0
+
+[training]
+rounds = 20
+horizon = 30
+first_round_episodes = 10000
+episodes_per_round = 5000
+alm_population = 10000
+alm_simulations = 100
+alm_tolerance = 0.001
+score_window = 1000
+alm_initial_aggregate_state = 0
+pretrain_actor = false
+pretrain_steps = 100
+pretrain_batch_size = 1000
+pretrain_target_ratio = 0.9
+
+[evaluation]
+aggregate_paths = 500
+population_per_path = 5000
+horizon = 30
+alm_paths = 300
+policy_capital_min = 0.001
+policy_capital_max = 80.0
+policy_capital_step = 1.0
+figure_dpi = 200
+utility_initial_aggregate_state = 1
+alm_initial_aggregate_state = 0
+comparison_initial_aggregate_state = 1
+
+[runtime]
+seed = 0
+deterministic_torch = true
+device = "auto"
+dtype = "float32"
+
+[compatibility]
+legacy_faithful = true
+use_normalized_labor_endowment = true
+use_joint_state_index_bug = true
+use_soft_target_initialization_bug = true
+discount_reported_training_score = true
+keep_ou_state_between_episodes = true
+keep_last_period_reward = true
+force_exact_unemployment_shares = true
+evaluate_methods_on_separate_shocks = true
+leave_final_evaluation_utility_zero = true
+
+[initial_alm]
+bad_intercept = 0.0
+bad_slope = 1.0
+good_intercept = 0.0
+good_slope = 1.0

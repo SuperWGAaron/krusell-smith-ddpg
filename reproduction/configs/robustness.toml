@@ -1,0 +1,129 @@
+schema_version = 1
+suite_type = "robustness"
+suite_name = "thesis_robustness"
+base_config = "configs/thesis.toml"
+output_root = "outputs/robustness"
+historical_classification = "reported_only"
+description = "Eleven robustness variants from Thesis.tex. Reported close/fail labels have no historical scalar acceptance rule."
+# The suite runner materializes every variant with the explicit top-level
+# verification_profile = "structural", regardless of the base profile.
+
+[base_overrides]
+"training.rounds" = 5
+
+[[variants]]
+test_number = 1
+id = "batch_size_2048"
+reported_setting = "batch size = 2048"
+reported_outcome = "close"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"network.batch_size" = 2048
+
+[[variants]]
+test_number = 2
+id = "batch_size_512"
+reported_setting = "batch size = 512"
+reported_outcome = "close"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"network.batch_size" = 512
+
+[[variants]]
+test_number = 3
+id = "batch_size_64"
+reported_setting = "batch size = 64"
+reported_outcome = "fail"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"network.batch_size" = 64
+
+[[variants]]
+test_number = 4
+id = "different_random_seeds"
+reported_setting = "different random seeds"
+reported_outcome = "close"
+numeric_historical_target_available = false
+historical_seed_values_available = false
+seed_values = [1, 7, 42]
+note = "The explicit seed values are a new operationalization because the thesis does not record the alternate seeds."
+
+[[variants]]
+test_number = 5
+id = "learning_rates_times_10"
+reported_setting = "actor learning rate = 0.0001; critic learning rate = 0.0005"
+reported_outcome = "close"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"network.actor_learning_rate" = 0.0001
+"network.critic_learning_rate" = 0.0005
+
+[[variants]]
+test_number = 6
+id = "hidden_sizes_200_400"
+reported_setting = "layer one = 200; layer two = 400"
+reported_outcome = "close"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"network.hidden_sizes" = [200, 400]
+
+[[variants]]
+test_number = 7
+id = "discount_factor_0_9"
+reported_setting = "discount factor = 0.9 with a larger number of steps"
+reported_outcome = "fail"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"economy.beta" = 0.9
+"training.horizon" = 64
+"evaluation.horizon" = 64
+
+[[variants]]
+test_number = 8
+id = "discount_factor_0_99"
+reported_setting = "discount factor = 0.99 with a larger number of steps"
+reported_outcome = "fail"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"economy.beta" = 0.99
+"training.horizon" = 666
+"evaluation.horizon" = 666
+
+[[variants]]
+test_number = 9
+id = "horizon_60"
+reported_setting = "number of steps = 60"
+reported_outcome = "fail"
+numeric_historical_target_available = false
+
+[variants.overrides]
+"training.horizon" = 60
+"evaluation.horizon" = 60
+
+[[variants]]
+test_number = 10
+id = "uniform_exploration_noise"
+reported_setting = "exploration noise uniform over [0, 1]"
+reported_outcome = "fail"
+numeric_historical_target_available = false
+[variants.overrides]
+"exploration.kind" = "uniform"
+"exploration.uniform_low" = 0.0
+"exploration.uniform_high" = 1.0
+
+[[variants]]
+test_number = 11
+id = "pretraining"
+reported_setting = "pre-training = yes"
+reported_outcome = "close"
+numeric_historical_target_available = false
+note = "Actor-only manuscript operationalization: target 0.9. The retained Python path targets 0.7 and then pretrains the Critic, so this is not an exact historical replay."
+[variants.overrides]
+"training.pretrain_actor" = true

@@ -1,0 +1,3 @@
+# Preserve archived evidence byte-for-byte, including checksum-pinned summaries.
+reproduction/data/** -text
+reproduction-tensorflow/data/** -text

@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "name": "thesis-reported-results",
+  "purpose": "Machine-readable verification targets transcribed from the original research manuscript. These are targets, not bundled reproduced outputs; the manuscript is not required to run the project.",
+  "source": {
+    "historical_filename": "Thesis.tex",
+    "bundled": false,
+    "sha256": "8e9b1713b72d8c44483f483deb812971463fd45d058caa56c46ca039dbbd3107",
+    "title": "A Reinforcement Learning Approach to Krusell and Smith (1998) from the Perspective of Mean Field Game",
+    "result_sections": [
+      "Discounted sum of utility",
+      "Policy function",
+      "Aggregate law of motion (ALM)",
+      "Updates in training process",
+      "Robustness test"
+    ]
+  },
+  "status_semantics": {
+    "pipeline_completed": "All configured stages exited successfully and required artifacts exist.",
+    "numerically_verified": "Every required machine-checkable thesis target passed its declared strict comparison.",
+    "important": "Pipeline completion alone is not evidence that the PyTorch run reproduced the thesis numbers."
+  },
+  "comparison_policy": {
+    "strict_reported_rounding": "For a scalar printed to d decimal places, absolute_tolerance is one half-unit in the last reported place.",
+    "qualitative": "Qualitative and hardware-time claims are reported separately and cannot make numerical verification pass.",
+    "missing_target": "A missing historical numeric value is reported as not_verifiable, never as passed."
+  },
+  "canonical_configuration": {
+    "verification_profile": "thesis_numerical",
+    "economy": {
+      "capital_share": 0.36,
+      "discount_factor": 0.8,
+      "depreciation_rate": 0.025,
+      "risk_aversion": 1.0,
+      "initial_individual_capital": 40.0,
+      "initial_aggregate_capital": 40.0,
+      "horizon": 30
+    },
+    "transitions": {
+      "simulation_initial_aggregate_state": 1,
+      "simulation_initial_aggregate_state_label": "good",
+      "role": "generic fallback when a stage-specific initial state is not supplied"
+    },
+    "network": {
+      "state_dimension": 4,
+      "action_dimension": 1,
+      "hidden_dimensions": [200, 100],
+      "actor_learning_rate": 0.00001,
+      "critic_learning_rate": 0.00005,
+      "target_update_rate": 0.01,
+      "batch_size": 1024
+    },
+    "training": {
+      "random_seed": 0,
+      "first_round_episodes": 10000,
+      "later_round_episodes": 5000,
+      "reported_rounds": [5, 20],
+      "terminal_penalty": -20.0,
+      "alm_tolerance": 0.001,
+      "alm_tolerance_role": "diagnostic_only",
+      "early_stop_on_alm_tolerance": false,
+      "alm_initial_aggregate_state": 0,
+      "alm_initial_aggregate_state_label": "bad"
+    },
+    "evaluation": {
+      "aggregate_shock_paths": 500,
+      "agents_per_path": 5000,
+      "sample_size_per_method": 2500000,
+      "horizon": 30,
+      "utility_initial_aggregate_state": 1,
+      "utility_initial_aggregate_state_label": "good",
+      "alm_initial_aggregate_state": 0,
+      "alm_initial_aggregate_state_label": "bad",
+      "comparison_initial_aggregate_state": 1,
+      "comparison_initial_aggregate_state_label": "good",
+      "initial_state_provenance": "Stage-specific inference from the utility audit and ALM RMSE pattern; the separate legacy pre-seed RNG draws are unrecoverable."
+    }
+  },
+  "benchmark_inputs": {
+    "directory": "data/benchmark",
+    "family": "productivity shocks (0.99, 1.01)",
+    "B": {
+      "sha256": "7a8566e86208675dc0ac73d91d683ff2954762387e821f7bf54b3041e32725d5",
+      "values_good_then_bad": [0.08016882613802667, 0.8930480716050326, 0.07494796817593885, 0.8926241477655064]
+    },
+    "R2": {
+      "sha256": "bde10a12dd19b117ca76972b1fe17e88f0cb07ea361a7d7e9dd0ba7ab730789d",
+      "values_good_then_bad": [0.9979291682299285, 0.9975115152362428]
+    },
+    "kss_k_opt": {
+      "sha256": "2615646d854ac5b1f3163802008283fd70a31a28a0ca910765327a61936579f2",
+      "shape": [100, 20, 4]
+    },
+    "kss_value": {
+      "sha256": "74abc1602a9c2559e6b8e863211bba25ab55f624254789cfa06d4546255a4567",
+      "shape": [100, 20, 4]
+    }
+  },
+  "numerical_targets": {
+    "discounted_utility": {
+      "design": {
+        "aggregate_shock_paths": 500,
+        "agents_per_path": 5000,
+        "sample_size_per_method": 2500000,
+        "horizon": 30,
+        "discount_factor": 0.8,
+        "utility_initial_aggregate_state": 1,
+        "utility_initial_aggregate_state_label": "good",
+        "initial_state_evidence": "strong inference from full DP audit, not recovered parameters_dp pre-seed RNG state"
+      },
+      "dynamic_programming": {
+        "mean": {"value": 8.9583, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "standard_deviation": {"value": 0.1789, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "maximum": {"value": 9.0802, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "minimum": {"value": 6.0919, "reported_decimals": 4, "absolute_tolerance": 0.00005}
+      },
+      "ddpg_round_5": {
+        "mean": {"value": 8.8478, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "standard_deviation": {"value": 0.2016, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "maximum": {"value": 8.9971, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "minimum": {"value": 2.3053, "reported_decimals": 4, "absolute_tolerance": 0.00005}
+      },
+      "comparison": {
+        "relative_mean_difference": {"value": -0.0123, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+        "independent_samples_t": {"value": -648.514, "reported_decimals": 3, "absolute_tolerance": 0.0005},
+        "degrees_of_freedom": {"value": 4999998, "absolute_tolerance": 0},
+        "p_value": {"operator": "less_than", "value": 0.0001}
+      }
+    },
+    "aggregate_law_of_motion": {
+      "form": "log(K[t+1]) = intercept[state] + slope[state] * log(K[t])",
+      "design": {
+        "alm_initial_aggregate_state": 0,
+        "alm_initial_aggregate_state_label": "bad",
+        "initial_state_evidence": "printed RMSE pattern is consistent with a fixed-bad start; the parameters_ddpg/MFG pre-seed RNG state is unrecoverable"
+      },
+      "dynamic_programming": {
+        "good": {
+          "intercept": {"value": 0.0802, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "slope": {"value": 0.8930, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "r_squared": {"value": 0.997929, "reported_decimals": 6, "absolute_tolerance": 0.0000005},
+          "rmse": {"value": 0.210095, "reported_decimals": 6, "absolute_tolerance": 0.0000005}
+        },
+        "bad": {
+          "intercept": {"value": 0.0749, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "slope": {"value": 0.8926, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "r_squared": {"value": 0.997512, "reported_decimals": 6, "absolute_tolerance": 0.0000005},
+          "rmse": {"value": 0.620519, "reported_decimals": 6, "absolute_tolerance": 0.0000005}
+        }
+      },
+      "ddpg_round_5": {
+        "good": {
+          "intercept": {"value": -0.0011, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "slope": {"value": 0.9251, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "r_squared": {"value": 0.999041, "reported_decimals": 6, "absolute_tolerance": 0.0000005},
+          "rmse": {"value": 0.458303, "reported_decimals": 6, "absolute_tolerance": 0.0000005}
+        },
+        "bad": {
+          "intercept": {"value": -0.0377, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "slope": {"value": 0.9267, "reported_decimals": 4, "absolute_tolerance": 0.00005},
+          "r_squared": {"value": 0.998255, "reported_decimals": 6, "absolute_tolerance": 0.0000005},
+          "rmse": {"value": 0.974067, "reported_decimals": 6, "absolute_tolerance": 0.0000005}
+        }
+      }
+    },
+    "training_process": {
+      "score_stabilizes_near_game": {"value": 15000, "kind": "approximate_qualitative"},
+      "alm_maximum_update_not_below": {"value": 0.01, "kind": "reported_observation"},
+      "rounds_featured": [5, 20]
+    },
+    "reported_runtime": {
+      "hardware": "Google Cloud Platform, 4 vCPUs, 15 GB memory, NVIDIA Tesla K80",
+      "ddpg_round_5_hours": {"value": 8, "kind": "approximate_nonportable"},
+      "ddpg_round_20_hours": {"value": 30, "kind": "approximate_nonportable"},
+      "dynamic_programming_hours": {"reported_relation": "less_than", "value": 1, "kind": "approximate_nonportable"}
+    }
+  },
+  "qualitative_targets": {
+    "policy_round_5": [
+      "Both DP policies and both DDPG policies at K=40 in the good aggregate state lie below the 45-degree line over the plotted range.",
+      "The DP policy is approximately linear except near zero capital.",
+      "The DDPG policy is less smooth and the employment and unemployment curves cross at high capital."
+    ],
+    "policy_round_20": [
+      "The two DDPG policy curves are closer to a linear pattern than after round 5."
+    ],
+    "aggregate_law": [
+      "For both methods, predicted next-period aggregate capital is higher in the good state over the economically relevant plotted range.",
+      "ALM approximation and simulation paths are visually close."
+    ],
+    "utility": [
+      "DDPG mean discounted utility is approximately one percent below the dynamic-programming benchmark."
+    ]
+  },
+  "artifact_targets": {
+    "numerical_figure_count": 23,
+    "figure_format": "jpg",
+    "reference_pixel_dimensions": [1280, 960],
+    "reference_dpi": 200,
+    "required_figures": [
+      "figures/DP/DP_policy_good_state_eng.jpg",
+      "figures/DP/DP_Equilibrium_ALM_eng.jpg",
+      "figures/DP/DP_Equilibrium_K_path_eng.jpg",
+      "figures/round_5/policy_good_state_eng.jpg",
+      "figures/round_5/Equilibrium_ALM_eng.jpg",
+      "figures/round_5/Equilibrium_K_path_eng.jpg",
+      "figures/round_5/ALM_coeff_eng.jpg",
+      "figures/round_5/Equilibrium_ALM_after_each_round_selected_eng.jpg",
+      "figures/round_5/score_history_eng.jpg",
+      "figures/round_5/comparison_consumption_capital_eng.jpg",
+      "figures/round_5/comparison_income_eng.jpg",
+      "figures/round_5/comparison_utility_eng.jpg",
+      "figures/round_5/utility_eng.jpg",
+      "figures/round_20/policy_good_state_eng.jpg",
+      "figures/round_20/Equilibrium_ALM_eng.jpg",
+      "figures/round_20/Equilibrium_K_path_eng.jpg",
+      "figures/round_20/ALM_coeff_eng.jpg",
+      "figures/round_20/Equilibrium_ALM_after_each_round_selected_eng.jpg",
+      "figures/round_20/score_history_eng.jpg",
+      "figures/round_20/comparison_consumption_capital_eng.jpg",
+      "figures/round_20/comparison_income_eng.jpg",
+      "figures/round_20/comparison_utility_eng.jpg",
+      "figures/round_20/utility_eng.jpg"
+    ],
+    "excluded_conceptual_figures": [
+      "basics/RL.pdf",
+      "basics/Actor.pdf",
+      "basics/Critic.pdf"
+    ],
+    "verification_note": "Required file presence is machine-checkable. JPEG byte equality is not required because plotting, font, and encoder versions vary."
+  },
+  "robustness_targets": [
+    {
+      "test_number": 1,
+      "id": "batch_size_2048",
+      "reported_setting": "batch size = 2048",
+      "overrides": {"network.batch_size": 2048},
+      "reported_outcome": "close",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 2,
+      "id": "batch_size_512",
+      "reported_setting": "batch size = 512",
+      "overrides": {"network.batch_size": 512},
+      "reported_outcome": "close",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 3,
+      "id": "batch_size_64",
+      "reported_setting": "batch size = 64",
+      "overrides": {"network.batch_size": 64},
+      "reported_outcome": "fail",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 4,
+      "id": "different_random_seeds",
+      "reported_setting": "different random seeds",
+      "overrides": {"runtime.seed_sweep": [1, 7, 42]},
+      "reported_outcome": "close",
+      "numeric_historical_target_available": false,
+      "note": "The thesis does not record which alternate seeds were used; 1, 7, and 42 are a new explicit operationalization."
+    },
+    {
+      "test_number": 5,
+      "id": "learning_rates_times_10",
+      "reported_setting": "actor learning rate = 0.0001; critic learning rate = 0.0005",
+      "overrides": {
+        "network.actor_learning_rate": 0.0001,
+        "network.critic_learning_rate": 0.0005
+      },
+      "reported_outcome": "close",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 6,
+      "id": "hidden_dimensions_200_400",
+      "reported_setting": "layer one = 200; layer two = 400",
+      "overrides": {"network.hidden_sizes": [200, 400]},
+      "reported_outcome": "close",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 7,
+      "id": "discount_factor_0_9",
+      "reported_setting": "discount factor = 0.9 with a larger horizon",
+      "overrides": {"economy.beta": 0.9, "training.horizon": 64, "evaluation.horizon": 64},
+      "reported_outcome": "fail",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 8,
+      "id": "discount_factor_0_99",
+      "reported_setting": "discount factor = 0.99 with a larger horizon",
+      "overrides": {"economy.beta": 0.99, "training.horizon": 666, "evaluation.horizon": 666},
+      "reported_outcome": "fail",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 9,
+      "id": "horizon_60",
+      "reported_setting": "number of steps = 60",
+      "overrides": {"training.horizon": 60, "evaluation.horizon": 60},
+      "reported_outcome": "fail",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 10,
+      "id": "uniform_exploration_noise",
+      "reported_setting": "exploration noise uniform over [0, 1]",
+      "overrides": {
+        "exploration.kind": "uniform",
+        "exploration.uniform_low": 0.0,
+        "exploration.uniform_high": 1.0
+      },
+      "reported_outcome": "fail",
+      "numeric_historical_target_available": false
+    },
+    {
+      "test_number": 11,
+      "id": "pretraining",
+      "reported_setting": "pre-training = yes",
+      "overrides": {
+        "training.pretrain_actor": true,
+        "training.pretrain_target_ratio": 0.9
+      },
+      "reported_outcome": "close",
+      "numeric_historical_target_available": false,
+      "note": "Actor-only manuscript operationalization: the configured hook targets 0.9. The retained Python path targets 0.7 and then pretrains the Critic; missing historical pretraining artifacts and stopping state prevent exact replay."
+    }
+  ],
+  "known_conflicts": [
+    {
+      "id": "discount_factor_table_typo",
+      "manuscript_table": 0.99,
+      "manuscript_prose_and_code": 0.8,
+      "canonical_choice": 0.8
+    },
+    {
+      "id": "network_width_prose_mismatch",
+      "manuscript_architecture_prose": [100, 100],
+      "manuscript_hyperparameter_table_and_code": [200, 100],
+      "canonical_choice": [200, 100]
+    },
+    {
+      "id": "legacy_stage_initial_aggregate_state_rng",
+      "legacy_behavior": "DP utility and ALM paths used separate stateful Markov chains created through parameters_dp and parameters_ddpg/MFG. Each sampled and reused a default x0 before the evaluation script called np.random.seed(0).",
+      "historical_pre_seed_rng_states_available": false,
+      "historical_x0_values_available": false,
+      "audit_evidence": {
+        "utility": "A full 2.5-million-observation DP audit strongly infers a fixed good start.",
+        "alm": "The printed ALM RMSE pattern is consistent with a separately sampled fixed bad start."
+      },
+      "canonical_choices": {
+        "utility": 1,
+        "comparison": 1,
+        "training_alm": 0,
+        "evaluation_alm": 0,
+        "fallback": 1
+      },
+      "state_labels": {"0": "bad", "1": "good"},
+      "verification_effect": "Explicit stage choices make new runs reproducible but do not recover either historical import-time draw; strict statistics may still miss their reported-rounding tolerances."
+    },
+    {
+      "id": "alternate_curated_dp_cache",
+      "alternate_directory": "../reproduction-tensorflow/data/historical/dp_base",
+      "alternate_family": "productivity shocks (0.9, 1.1)",
+      "alternate_B": [0.09004224893070228, 0.8954558993235116, 0.06148487345833546, 0.8961166554724056],
+      "alternate_R2": [0.9977281767187658, 0.9966733157172626],
+      "canonical_choice": "data/benchmark",
+      "verification_effect": "Selected alternate cache files are preserved for audit in the sibling TensorFlow package but excluded from PyTorch inputs. The recovered published cache matches printed DP B/R2 after rounding, but loading it remains an input-provenance check rather than a new computation."
+    },
+    {
+      "id": "historical_tensorflow_artifacts",
+      "directory": "../reproduction-tensorflow/data/historical",
+      "preserved": ["selected historical Actor checkpoints", "score histories", "ALM histories", "utility samples", "comparison paths"],
+      "verification_effect": "Historical TensorFlow replay evidence is bundled separately. This PyTorch pipeline trains new weights and checks the declared numerical targets; cross-framework checkpoint conversion and weight-for-weight equivalence have not been established."
+    }
+  ]
+}

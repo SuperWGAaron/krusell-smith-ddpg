@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "purpose": "Documentary transcription and provenance map; numbers here are targets, not evidence of a new run.",
+  "manuscript": {
+    "source": "A Reinforcement Learning Approach to Krusell and Smith (1998) from the Perspective of Mean Field Game; historical manuscript, not distributed with this project",
+    "source_scope": "Bundled numerical transcription; the retained manuscript SHA-256 records the original source and does not require a local manuscript file.",
+    "sha256": "8e9b1713b72d8c44483f483deb812971463fd45d058caa56c46ca039dbbd3107",
+    "reported_environment": {
+      "python": "3.7",
+      "tensorflow": "1.14",
+      "seed_claim": "fixed"
+    },
+    "discounted_utility": {
+      "design": {
+        "aggregate_paths": 500,
+        "agents_per_path": 5000,
+        "horizon": 30,
+        "discount_factor": 0.8
+      },
+      "dynamic_programming": {
+        "mean": 8.9583,
+        "standard_deviation": 0.1789,
+        "maximum": 9.0802,
+        "minimum": 6.0919
+      },
+      "ddpg_round_5": {
+        "mean": 8.8478,
+        "standard_deviation": 0.2016,
+        "maximum": 8.9971,
+        "minimum": 2.3053
+      },
+      "comparison": {
+        "relative_mean_difference_percent": -1.23,
+        "independent_samples_t": -648.514,
+        "degrees_of_freedom": 4999998,
+        "p_less_than": 0.0001
+      }
+    },
+    "aggregate_law_of_motion": {
+      "form": "log(K[t+1]) = intercept[state] + slope[state] * log(K[t])",
+      "dynamic_programming": {
+        "good": {"intercept": 0.0802, "slope": 0.8930, "r_squared": 0.997929, "rmse": 0.210095},
+        "bad": {"intercept": 0.0749, "slope": 0.8926, "r_squared": 0.997512, "rmse": 0.620519}
+      },
+      "ddpg_round_5": {
+        "good": {"intercept": -0.0011, "slope": 0.9251, "r_squared": 0.999041, "rmse": 0.458303},
+        "bad": {"intercept": -0.0377, "slope": 0.9267, "r_squared": 0.998255, "rmse": 0.974067}
+      }
+    },
+    "featured_rounds": [5, 20],
+    "numerical_figures": {
+      "DP": [
+        "DP_policy_good_state_eng.jpg",
+        "DP_Equilibrium_ALM_eng.jpg",
+        "DP_Equilibrium_K_path_eng.jpg"
+      ],
+      "round_5_and_round_20_each": [
+        "policy_good_state_eng.jpg",
+        "Equilibrium_ALM_eng.jpg",
+        "Equilibrium_K_path_eng.jpg",
+        "ALM_coeff_eng.jpg",
+        "Equilibrium_ALM_after_each_round_selected_eng.jpg",
+        "score_history_eng.jpg",
+        "comparison_consumption_capital_eng.jpg",
+        "comparison_income_eng.jpg",
+        "comparison_utility_eng.jpg",
+        "utility_eng.jpg"
+      ]
+    },
+    "robustness_outcomes": [
+      {"test": 1, "setting": "batch size 2048", "outcome": "close"},
+      {"test": 2, "setting": "batch size 512", "outcome": "close"},
+      {"test": 3, "setting": "batch size 64", "outcome": "fail"},
+      {"test": 4, "setting": "different random seeds", "outcome": "close"},
+      {"test": 5, "setting": "actor/critic learning rates 0.0001/0.0005", "outcome": "close"},
+      {"test": 6, "setting": "hidden widths 200/400", "outcome": "close"},
+      {"test": 7, "setting": "discount factor 0.9 with longer horizon", "outcome": "fail"},
+      {"test": 8, "setting": "discount factor 0.99 with longer horizon", "outcome": "fail"},
+      {"test": 9, "setting": "horizon 60", "outcome": "fail"},
+      {"test": 10, "setting": "uniform exploration over [0,1]", "outcome": "fail"},
+      {"test": 11, "setting": "pretraining", "outcome": "close"}
+    ]
+  },
+  "archived_run": {
+    "identity": "Original 2020 TensorFlow/NumPy outputs, not recomputed by this package",
+    "original_path_scope": "Paths ending in _original are historical provenance labels, not local dependencies; the selected archives are bundled under data/historical/.",
+    "round_5_summary_original": "Thesis/test/dynamic_programming/round_5_7/summary.txt",
+    "round_5_summary_sha256": "5ba6320dde4ccc282ea98ba91bc4748306d61945c6ef03c2587944c2061f6e4c",
+    "round_20_summary_original": "Thesis/test/dynamic_programming/round_20_7/summary.txt",
+    "round_20_summary_sha256": "5b106f83d1a4d5a6d6700fcfcfa8bf6e1c47d30901133fa61f1ab8f131a22ff2",
+    "reported_versions": {"tensorflow": "1.14.0", "numpy": "1.18.1"},
+    "round_5": {
+      "final_actor_checkpoint_sha256": {
+        "5.ckpt.data-00000-of-00001": "19b611afe2c9593b4fabe155b99fe02aad9801ba4459e2bdb5a9f41984c381dc",
+        "5.ckpt.index": "d882daf1dcc367a52af7d1bf037ee8ee44bc5eb3ede460d9fac3b91e2f6eb13b",
+        "5.ckpt.meta": "d64d1b5574ae38fdad0ff6102fa87d9783759e2312d9ceab306817df8628ecda"
+      },
+      "dynamic_programming_utility": {
+        "mean": 8.958301221229313,
+        "standard_deviation": 0.17887623297718416,
+        "maximum": 9.080241945238592,
+        "minimum": 6.091853192724667
+      },
+      "ddpg_utility": {
+        "mean": 8.847757410625096,
+        "standard_deviation": 0.20159940964485948,
+        "maximum": 8.997070301139654,
+        "minimum": 2.3053495765524596
+      },
+      "dynamic_programming_alm": {
+        "good": {"intercept": 0.09004224893070228, "slope": 0.8954558993235116, "r_squared": 0.9977281767187658, "rmse": 0.21009535014351352},
+        "bad": {"intercept": 0.06148487345833546, "slope": 0.8961166554724056, "r_squared": 0.9966733157172626, "rmse": 0.6205191328554249}
+      },
+      "ddpg_alm": {
+        "good": {"intercept": -0.0011135484914203799, "slope": 0.9251859711992716, "r_squared": 0.9990409499951233, "rmse": 0.45830343775310195},
+        "bad": {"intercept": -0.03771383147574731, "slope": 0.9266544682766087, "r_squared": 0.9982553003631071, "rmse": 0.9740671005059436}
+      }
+    },
+    "round_20": {
+      "final_actor_checkpoint_sha256": {
+        "20.ckpt.data-00000-of-00001": "a8a09fba0cbf9b2c877b339d85afbf871857b5fdef982b00d899609b8059efc8",
+        "20.ckpt.index": "5ca6cda93e5630e7ab290e2f0e4bce0fcd7a846271a7fafef71480a41df0fb67",
+        "20.ckpt.meta": "05e31e1eca0410d9b436ff9f9556cfbe5ee6c6a3d2eb6ab4e1a9b3fa73228196"
+      }
+    },
+    "known_divergences_from_manuscript": [
+      "The archived DP ALM regression coefficients and R-squared values do not equal the printed DP ALM; their RMSEs do match.",
+      "The archived round-5 DDPG good-state slope 0.925185971... rounds to 0.9252 at four decimals, whereas the manuscript prints 0.9251."
+    ]
+  },
+  "benchmark_inputs": {
+    "source_original": "Thesis/code/test/dynamic_programming/",
+    "source_scope": "Historical provenance path, not a local dependency; these inputs are bundled under data/benchmark/.",
+    "B_sha256": "7a8566e86208675dc0ac73d91d683ff2954762387e821f7bf54b3041e32725d5",
+    "R2_sha256": "bde10a12dd19b117ca76972b1fe17e88f0cb07ea361a7d7e9dd0ba7ab730789d",
+    "kss_k_opt_sha256": "2615646d854ac5b1f3163802008283fd70a31a28a0ca910765327a61936579f2",
+    "kss_value_sha256": "74abc1602a9c2559e6b8e863211bba25ab55f624254789cfa06d4546255a4567"
+  }
+}

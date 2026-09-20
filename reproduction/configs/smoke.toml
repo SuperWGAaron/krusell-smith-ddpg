@@ -1,0 +1,112 @@
+schema_version = 1
+experiment_name = "smoke"
+verification_profile = "structural"
+
+[economy]
+alpha = 0.36
+beta = 0.8
+delta = 0.025
+risk_aversion = 1.0
+productivity_bad = 0.99
+productivity_good = 1.01
+unemployment_bad = 0.10
+unemployment_good = 0.04
+unemployment_income = 0.0
+initial_individual_capital = 40.0
+initial_aggregate_capital = 40.0
+invalid_reward = -20.0
+minimum_positive = 0.0001
+
+[transitions]
+average_duration_bad = 8.0
+average_duration_good = 8.0
+unemployment_duration_bad = 2.5
+unemployment_duration_good = 1.5
+unemployment_persistence_gb_over_bb = 1.25
+unemployment_persistence_bg_over_gg = 0.75
+simulation_initial_aggregate_state = 1
+
+[grids]
+individual_min = 0.1
+individual_max = 80.0
+individual_size = 16
+individual_curvature = 3.0
+aggregate_min = 0.1
+aggregate_max = 50.0
+aggregate_size = 8
+
+[network]
+state_size = 4
+action_size = 1
+hidden_sizes = [32, 16]
+actor_learning_rate = 0.00001
+critic_learning_rate = 0.00005
+target_update_rate = 0.01
+batch_size = 8
+replay_capacity = 256
+replay_sample_with_replacement = true
+action_bound = 1.0
+actor_output_scale = 2.0
+normalization = "legacy_frozen"
+initialization = "legacy_glorot_normal"
+ou_mean = 0.0
+ou_sigma = 0.05
+ou_theta = 0.20
+ou_dt = 0.01
+
+[exploration]
+kind = "ou"
+uniform_low = 0.0
+uniform_high = 1.0
+
+[training]
+rounds = 2
+horizon = 5
+first_round_episodes = 16
+episodes_per_round = 8
+alm_population = 32
+alm_simulations = 2
+alm_tolerance = 0.001
+score_window = 8
+alm_initial_aggregate_state = 0
+pretrain_actor = false
+pretrain_steps = 4
+pretrain_batch_size = 16
+pretrain_target_ratio = 0.9
+
+[evaluation]
+aggregate_paths = 2
+population_per_path = 32
+horizon = 5
+alm_paths = 2
+policy_capital_min = 0.1
+policy_capital_max = 10.0
+policy_capital_step = 1.0
+figure_dpi = 80
+utility_initial_aggregate_state = 1
+alm_initial_aggregate_state = 0
+comparison_initial_aggregate_state = 1
+
+[runtime]
+seed = 1
+deterministic_torch = true
+device = "cpu"
+dtype = "float32"
+
+[compatibility]
+legacy_faithful = true
+use_normalized_labor_endowment = true
+use_joint_state_index_bug = true
+use_soft_target_initialization_bug = true
+discount_reported_training_score = true
+keep_ou_state_between_episodes = true
+keep_last_period_reward = true
+force_exact_unemployment_shares = true
+evaluate_methods_on_separate_shocks = true
+leave_final_evaluation_utility_zero = true
+
+[initial_alm]
+bad_intercept = 0.0
+bad_slope = 1.0
+good_intercept = 0.0
+good_slope = 1.0

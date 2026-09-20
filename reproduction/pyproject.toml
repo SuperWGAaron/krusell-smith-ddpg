@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ks-thesis-reproduction"
+version = "0.1.0"
+description = "Auditable PyTorch reproduction of the Krusell-Smith thesis experiments"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "matplotlib>=3.8,<4",
+  "numpy>=1.26,<3",
+  "torch>=2.2,<3",
+]
+
+[project.scripts]
+ks-reproduce = "ks_reproduction.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

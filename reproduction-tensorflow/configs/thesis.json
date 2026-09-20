@@ -1,0 +1,14 @@
+{
+  "name": "thesis_round_5",
+  "n_pop": 100,
+  "n_steps": 30,
+  "n_life": 5000,
+  "n_round": 5,
+  "n_life_0": 10000,
+  "simu_pop": 10000,
+  "simu_round": 100,
+  "K_0": 40,
+  "seed": 0,
+  "idx": 30
+}
+

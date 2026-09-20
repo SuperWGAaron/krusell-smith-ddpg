@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg viewBox="0 0 960 400" role="img" aria-labelledby="loop-title loop-desc" xmlns="http://www.w3.org/2000/svg" width="960" height="400">
+  <title id="loop-title">Fictitious-play-inspired outer economic loop</title>
+  <desc id="loop-desc">Fix an aggregate forecast, train a DDPG household best response, average saved policies, simulate many households, fit aggregate dynamics, and feed the new forecast into the next round.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0 0L7 3.5L0 7" fill="#526c76" />
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="960" height="400" fill="#ffffff" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#18384b" letter-spacing=".07em" font-weight="700" x="22" y="28">A / ECONOMIC CONSISTENCY · ROUND j</text>
+  <rect x="22" y="59" width="240" height="109" rx="5" fill="#eef1ed" stroke="#cdd5d3" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#18384b" letter-spacing=".07em" font-weight="700" x="42" y="87">01 · FIX THE FORECAST</text>
+  <text font-family="Georgia, serif" font-size="18" fill="#18384b" x="42" y="118">log K′ = A<tspan baseline-shift="sub" font-size="70%">z</tspan><tspan> + B</tspan><tspan baseline-shift="sub" font-size="70%">z</tspan><tspan> log K</tspan></text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#536773" x="42" y="144">Belief about aggregate saving</text>
+  <rect x="338" y="59" width="274" height="109" rx="5" fill="#e9f3ef" stroke="#007f73" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#18384b" letter-spacing=".07em" font-weight="700" x="358" y="87">02 · APPROXIMATE BEST RESPONSE</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#18384b" font-weight="700" x="358" y="118">DDPG household policy μ<tspan baseline-shift="sub" font-size="70%">j</tspan></text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#536773" x="358" y="144">Train with this forecast held fixed</text>
+  <rect x="688" y="59" width="250" height="109" rx="5" fill="#eef1ed" stroke="#cdd5d3" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#18384b" letter-spacing=".07em" font-weight="700" x="708" y="87">03 · AVERAGE POLICIES</text>
+  <text font-family="Georgia, serif" font-size="18" fill="#18384b" x="708" y="118">μ̄<tspan baseline-shift="sub" font-size="70%">j</tspan><tspan>(s) = (1/j) Σ μ</tspan><tspan baseline-shift="sub" font-size="70%">i</tspan><tspan>(s)</tspan></text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#536773" x="708" y="144">Uniform mean of saved Actors</text>
+  <path fill="none" stroke="#526c76" stroke-width="1.6" marker-end="url(#arrow)" d="M264 113H327" />
+  <path fill="none" stroke="#526c76" stroke-width="1.6" marker-end="url(#arrow)" d="M614 113H677" />
+  <rect x="688" y="242" width="250" height="109" rx="5" fill="#eef1ed" stroke="#cdd5d3" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#18384b" letter-spacing=".07em" font-weight="700" x="708" y="270">04 · SIMULATE HOUSEHOLDS</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#18384b" font-weight="700" x="708" y="301">Shared policy, different states</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#536773" x="708" y="327">K<tspan baseline-shift="sub" font-size="70%">t</tspan><tspan> = mean of individual k</tspan><tspan baseline-shift="sub" font-size="70%">t</tspan></text>
+  <rect x="338" y="242" width="274" height="109" rx="5" fill="#eef1ed" stroke="#cdd5d3" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#18384b" letter-spacing=".07em" font-weight="700" x="358" y="270">05 · FIT AGGREGATE DYNAMICS</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#18384b" font-weight="700" x="358" y="301">Regress log K′ on log K</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#536773" x="358" y="327">Separate good and bad regimes</text>
+  <rect x="22" y="242" width="240" height="109" rx="5" fill="#18384b" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#b3d9d3" letter-spacing=".07em" font-weight="700" x="42" y="270">06 · UPDATE THE BELIEF</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="15" fill="white" font-weight="700" x="42" y="301">Next round, new forecast</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#d3e0e4" x="42" y="327">Use the fitted forecast</text>
+  <path fill="none" stroke="#526c76" stroke-width="1.6" marker-end="url(#arrow)" d="M813 170V231" />
+  <path fill="none" stroke="#526c76" stroke-width="1.6" marker-end="url(#arrow)" d="M686 296H623" />
+  <path fill="none" stroke="#526c76" stroke-width="1.6" marker-end="url(#arrow)" d="M336 296H273" />
+  <path fill="none" stroke="#526c76" stroke-width="1.6" marker-end="url(#arrow)" d="M142 240V179" />
+  <text font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#536773" x="476" y="211" text-anchor="middle">Individual optimization and aggregate consistency are separate checks.</text>
+</svg>

@@ -1,0 +1,9 @@
+# The manuscript records Python 3.7 and TensorFlow r1.14.
+# Install requirements/legacy-py37.txt after creating this environment.
+name: ks-thesis-tf114
+channels:
+  - conda-forge
+dependencies:
+  - python=3.7
+  - pip=22.3.1
+

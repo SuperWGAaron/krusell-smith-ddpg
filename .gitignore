@@ -1,0 +1,28 @@
+# Local environments, generated runs, caches, and editor state
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+build/
+dist/
+outputs/
+runs/
+*.pt
+*.pth
+.DS_Store
+.ipynb_checkpoints/
+.idea/
+.vscode/
+.env
+.env.*
+
+# Manuscript and PDF files do not belong in this code repository
+*.tex
+*.pdf

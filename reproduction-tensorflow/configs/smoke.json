@@ -1,0 +1,14 @@
+{
+  "name": "smoke",
+  "n_pop": 8,
+  "n_steps": 4,
+  "n_life": 2,
+  "n_round": 1,
+  "n_life_0": 4,
+  "simu_pop": 16,
+  "simu_round": 2,
+  "K_0": 40,
+  "seed": 0,
+  "idx": 0
+}
+
