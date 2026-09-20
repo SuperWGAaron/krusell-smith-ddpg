@@ -77,9 +77,9 @@ The Krusell–Smith benchmark uses quarterly periods and $`\beta=0.99`$; this pr
 For a fixed forecast $`H`$, value-function iteration (VFI) solves
 
 ```math
-V_H(k,K,z,e)=\max_{0\leq k'<m}
-\left\{\log(m-k')+\beta\sum_{z',e'}P(z',e'\mid z,e)
-V_H(k',H_z(K),z',e')\right\}.
+V_H(k,K,z,e)=\max_{0\leq k'\lt m}
+\left\lbrace \log(m-k')+\beta\sum_{z',e'}P(z',e'\mid z,e)
+V_H(k',H_z(K),z',e')\right\rbrace.
 ```
 
 The maximizing action gives the household saving policy. The benchmark discretizes individual capital into 100 points and aggregate capital into 20 points, with four shock combinations; it interpolates continuation values between grid points.
